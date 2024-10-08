@@ -1,3 +1,4 @@
+# https://gitea.com/gitea/act_runner/src/commit/0e2a3e00f5b32d5407f4f929a1ae61d3df825362/.gitea/workflows/release-nightly.yml
 name: Release Nightly
 
 on:
@@ -38,18 +39,9 @@ jobs:
           images: |
             ghcr.io/${{ env.GHCR_IMAGE_NAME }}
           tags: |
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/') }}
             type=semver,pattern={{major}}
             type=raw,value=dev,enable=${{ github.ref == 'refs/heads/dev' }}
-
-            # type=pep440,pattern={{raw}},enable=${{ startsWith(github.ref, 'refs/tags/') }}
-
-            # type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='UTC'}}
-            # type=ref,event=branch
-            # type=ref,event=pr
-            # type=semver,pattern={{version}}
-            # type=semver,pattern={{major}}.{{minor}}.{{patch}}
-            # type=sha
 
       - name: Print metadata
         run: |
