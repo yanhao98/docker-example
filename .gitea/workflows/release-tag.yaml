@@ -1,16 +1,14 @@
-name: Build Docker Image
+name: Release Tag
 
 on:
-  workflow_dispatch:
   push:
+    tags:
+      - "*"
 
 env:
-  DOCKER_IMAGE_NAME: yanhao98/docker-example
-  GHCR_IMAGE_NAME: ${{ github.repository }}
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GHCR_USERNAME: ${{ github.repository_owner }}
+  DOCKER_IMAGE_NAME: murielmay67761/docker-example
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   docker:
@@ -19,19 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: docker.io
-      #     username: ${{ env.DOCKER_USERNAME }}
-      #     password: ${{ env.DOCKER_PASSWORD }}
-
-      - name: Login to GHCR
+      - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ env.GHCR_USERNAME }}
-          password: ${{ env.GHCR_TOKEN }}
+          registry: docker.io
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -39,22 +30,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # - name: Cache Docker layers
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       /tmp/.buildx-cache
-      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-buildx-
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            # docker.io/${{ env.DOCKER_IMAGE_NAME }}
-            ghcr.io/${{ env.GHCR_IMAGE_NAME }}
+            docker.io/${{ env.DOCKER_IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=semver,pattern={{major}}
@@ -83,7 +73,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           file: ./Dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # cache-from: type=local,src=/tmp/.buildx-cache
-          # cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
