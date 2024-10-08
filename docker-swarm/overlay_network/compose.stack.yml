@@ -1,0 +1,8 @@
+services:
+  my-backend:
+    image: <backend_image>
+networks:
+  # docker network create --attachable --driver overlay my-overlay-network
+  default:
+    name: my-overlay-network
+    external: true

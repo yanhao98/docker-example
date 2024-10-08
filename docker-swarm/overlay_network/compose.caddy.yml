@@ -1,0 +1,8 @@
+services:
+  caddy:
+    image: caddy:<version>
+    networks:
+      - my-overlay-network
+networks:
+  my-overlay-network:
+    external: true
