@@ -4,6 +4,7 @@
 
 DOMAIN=❗️❗️❗️
 PASSWORD=❗️❗️❗️
+docker inspect duplicati_canary | grep DUPLICATI__WEBSERVICE_PASSWORD
 
 docker run -d -p 8500:8200 --name duplicati_canary \
   -v duplicati-data:/data \
@@ -13,3 +14,4 @@ docker run -d -p 8500:8200 --name duplicati_canary \
   -e "DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES=$DOMAIN" \
   duplicati/duplicati:canary
 docker logs -f duplicati_canary
+
