@@ -5,6 +5,9 @@
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/Mon-ius/Docker-Warp-Socks/main/dev/warp-socks.yml)
 > Click the *CLOSE* button, Replace the $IP with the given one on the top side, then run:
 > `curl -x "socks5h://$IP:9091" -fsSL "https://www.cloudflare.com/cdn-cgi/trace"`
+> ```
+> docker run -it --entrypoint sing-box monius/docker-warp-socks:latest version
+> ```
 
 ssh 需要加参数` -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedAlgorithms=+ssh-rsa`
 ```bash
