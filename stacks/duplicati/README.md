@@ -2,6 +2,10 @@
 - https://github.com/linuxserver/docker-duplicati
 - https://github.com/duplicati/duplicati/blob/master/ReleaseBuilder/Resources/Docker/README.md
 
+```bash
+docker run --rm -it --entrypoint sh duplicati/duplicati:canary
+```
+
 ## 启动
 ```bash
 DUPLICATI_DOMAIN=❗️❗️❗️
