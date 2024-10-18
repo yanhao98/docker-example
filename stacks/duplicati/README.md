@@ -4,6 +4,7 @@
 
 ```bash
 docker run --rm -it --entrypoint sh duplicati/duplicati:canary
+/opt/duplicati/duplicati-cli help
 ```
 
 ## 启动
