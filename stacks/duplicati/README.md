@@ -25,3 +25,25 @@ echo "🌐http://"
 echo "$URL";
 echo "🌐";
 ```
+
+## 配置
+
+`:8500/ngax/index.html#/settings`
+
+```ini
+--machine-id=⚠️
+
+--send-mail-url=smtps://smtp.resend.com:2465
+--send-mail-username=resend
+--send-mail-password=⚠️
+--send-mail-from=Duplicati <notifications@⚠️>
+--send-mail-to=⚠️
+--send-mail-level=Warning,Error,Fatal
+--send-mail-any-operation=true
+--send-mail-subject=%OPERATIONNAME% 👉🏻%PARSEDRESULT%👈🏻 for %backup-name%
+--send-mail-body=%RESULT%
+
+--send-http-url=
+--send-http-result-output-format=Json
+```
+
