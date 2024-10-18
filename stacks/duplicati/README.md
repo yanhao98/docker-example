@@ -52,3 +52,6 @@ echo "🌐";
 --send-http-result-output-format=Json
 ```
 
+## Remote access control
+
+https://app.duplicati.com/app/dashboard
