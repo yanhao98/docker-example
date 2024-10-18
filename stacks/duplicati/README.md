@@ -11,7 +11,7 @@ docker run --rm -it --entrypoint bash duplicati/duplicati:canary
 ```bash
 DUPLICATI_DOMAIN=❗️❗️❗️
 DUPLICATI_PASSWORD=❗️❗️❗️
-docker run -d -p 8500:8200 --name duplicati_canary \
+docker run -d -p 8500:8200 --restart unless-stopped --name duplicati_canary \
   -v duplicati-data:/data \
   --mount type=bind,source=~/_docker-stacks,target/_docker-stacks \
   -e "TZ=Asia/Shanghai" \
