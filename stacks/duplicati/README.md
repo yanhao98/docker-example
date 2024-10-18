@@ -3,7 +3,7 @@
 - https://github.com/duplicati/duplicati/blob/master/ReleaseBuilder/Resources/Docker/README.md
 
 ```bash
-docker run --rm -it --entrypoint sh duplicati/duplicati:canary
+docker run --rm -it --entrypoint bash duplicati/duplicati:canary
 /opt/duplicati/duplicati-cli help
 ```
 
