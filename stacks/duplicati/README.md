@@ -13,7 +13,7 @@ DUPLICATI_DOMAIN=❗️❗️❗️
 DUPLICATI_PASSWORD=❗️❗️❗️
 docker run -d -p 8500:8200 --name duplicati_canary \
   -v duplicati-data:/data \
-  -v ~/_docker-stacks:/_docker-stacks \
+  --mount type=bind,source=~/_docker-stacks,target/_docker-stacks \
   -e "TZ=Asia/Shanghai" \
   -e "DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES=$DUPLICATI_DOMAIN" \
   -e "DUPLICATI__WEBSERVICE_PASSWORD=$DUPLICATI_PASSWORD" \
