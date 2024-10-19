@@ -14,6 +14,7 @@ if [ "$RUN_ONCE" = true ]; then
   DOCKER_ARGS+=(--rm)
 else
   WATCHTOWER_ARGS+=(--label-enable) # 仅监控并更新标签为 com.centurylinklabs.watchtower.enable 设置为 true 的容器。
+  WATCHTOWER_ARGS+=(--schedule "0 0 3 * * *") # 每天凌晨 3 点执行
   DOCKER_ARGS+=(-d)
   DOCKER_ARGS+=(--restart unless-stopped)
   DOCKER_ARGS+=(--name watchtower)
