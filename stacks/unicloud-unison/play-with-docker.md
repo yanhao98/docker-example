@@ -18,6 +18,7 @@ mkdir -p data shares
 chown -R 1000:1000 data
 chmod 777 shares
 docker run -d --name server \
+  -e TZ=Asia/Shanghai \
   --network host \
   -e SERVER_DEBUG=True \
   -e SERVER_UI_USERNAME=admin \
@@ -55,18 +56,19 @@ cat ~/data/log/sshd.log
 
 ## Client
 ```bash
-curl 192.168.0.18:80/status -v
+curl 192.168.0.8:80/status -v
 
 cd ~
 rm -rf data share
 mkdir -p data share
 chmod 777 data share
 docker run -d --name client1 \
+  -e TZ=Asia/Shanghai \
   --restart on-failure \
   --network host \
   -e CLIENT_HOSTNAME=client_hostname1 \
   -e ROLE=CLIENT \
-  -e SERVER_HOSTNAME=192.168.0.18 \
+  -e SERVER_HOSTNAME=192.168.0.8 \
   -e SERVER_PORT=2222 \
   -e SERVER_SHARE=share1 \
   -e API_PROTOCOL=http \
