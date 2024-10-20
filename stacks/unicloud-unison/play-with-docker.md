@@ -64,7 +64,7 @@ chmod 777 data share
 docker run -d --name client1 \
   --restart on-failure \
   --network host \
-  -e CLIENT_HOSTNAME=client_hostname \
+  -e CLIENT_HOSTNAME=client_hostname1 \
   -e ROLE=CLIENT \
   -e SERVER_HOSTNAME=192.168.0.18 \
   -e SERVER_PORT=2222 \
