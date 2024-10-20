@@ -1,6 +1,8 @@
 # unicloud
 [Unison](https://github.com/bcpierce00/unison/wiki/Software-for-use-with-Unison#web-interfaces) file sync web interface
 
+[examples/client_server_replica/docker-compose.yml](https://github.com/agarbato/unicloud/blob/8e767790ada4d5c8c04dce0e06ebb3fa4a3a82a8/examples/client_server_replica/docker-compose.yml)
+
 ## 准备
 1. 进入 https://labs.play-with-docker.com
 2. Add new instance 两个
