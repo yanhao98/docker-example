@@ -60,7 +60,6 @@ curl 192.168.0.18:80/status -v
 
 mkdir -p /unison-unicloud/data /unison-unicloud/share
 chown -R 1000:1000 /unison-unicloud/data
-# chmod 777 /unison-unicloud/share
 docker run -d --name unison-unicloud-client \
   -e TZ=Asia/Shanghai \
   --restart on-failure \
