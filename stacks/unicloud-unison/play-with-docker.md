@@ -83,7 +83,10 @@ docker logs -f client1
 
 
 ## 测试同步
+```
+touch ~/share/$(date +%s).txt
+```
+
 ```bash
-docker exec -it client1 touch /share/$(date +%s).txt
 docker exec -it server ls /shares/share1
 ```
