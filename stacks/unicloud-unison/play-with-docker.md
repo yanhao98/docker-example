@@ -12,20 +12,18 @@
 
 ### 启动服务
 ```bash
-cd ~
-rm -rf data shares
-mkdir -p data shares
-chown -R 1000:1000 data
-chmod 777 shares
-docker run -d --name server \
+mkdir -p /unison-unicloud/data /unison-unicloud/shares
+chown -R 1000:1000 /unison-unicloud/data
+chmod 777 /unison-unicloud/shares
+docker run -d --name unison-unicloud-server \
   -e TZ=Asia/Shanghai \
   --network host \
   -e SERVER_DEBUG=True \
   -e SERVER_UI_USERNAME=admin \
   -e SERVER_UI_PASSWORD= \
   -e ROLE=SERVER \
-  --mount type=bind,source=./data,target=/data \
-  --mount type=bind,source=./shares,target=/shares \
+  --mount type=bind,source=/unison-unicloud/data,target=/data \
+  --mount type=bind,source=/unison-unicloud/shares,target=/shares \
   agarbato1/unison-unicloud:2.53.4 \
   bash -c "echo 'Port 2222' >> /etc/sshd_config_debug && exec python3 -u start.py"
 ```
@@ -51,34 +49,35 @@ cat ~/data/log/sshd.log
 
 
 ### 添加 share1
-在`labs`点`Open Port`打开 80 端口，跳转后打开 http://ip172-18-0-23-csabksol2o90009mnang-80.direct.labs.play-with-docker.com`/shares`
+- 在`labs`点`Open Port`打开 80 端口
+- 跳转后打开 http://ip172-18-0-23-csabksol2o90009mnang-80.direct.labs.play-with-docker.com`/shares`
+- `Create Folder`选`No`
 
 
 ## Client
 ```bash
-curl 192.168.0.8:80/status -v
+curl 192.168.0.18:80/status -v
 
-cd ~
-rm -rf data share
-mkdir -p data share
-chmod 777 data share
-docker run -d --name client1 \
+mkdir -p /unison-unicloud/data /unison-unicloud/share
+chown -R 1000:1000 /unison-unicloud/data
+# chmod 777 /unison-unicloud/share
+docker run -d --name unison-unicloud-client \
   -e TZ=Asia/Shanghai \
   --restart on-failure \
   --network host \
   -e CLIENT_HOSTNAME=client_hostname1 \
   -e ROLE=CLIENT \
-  -e SERVER_HOSTNAME=192.168.0.8 \
+  -e SERVER_HOSTNAME=192.168.0.18 \
   -e SERVER_PORT=2222 \
   -e SERVER_SHARE=share1 \
   -e API_PROTOCOL=http \
   -e API_PORT=80 \
   -e SYNC_INTERVAL=15 \
-  --mount type=bind,source=./data,target=/data \
+  --mount type=bind,source=/unison-unicloud/data,target=/data \
   -e CLIENT_DEST=/share \
-  --mount type=bind,source=./share,target=/share \
+  --mount type=bind,source=/unison-unicloud/share,target=/share \
   agarbato1/unison-unicloud:2.53.4
-docker logs -f client1
+docker logs -f unison-unicloud-client
 ```
 
 ### 激活
@@ -88,7 +87,7 @@ docker logs -f client1
 
 ## 测试同步
 ```
-touch ~/share/$(date +%s).txt
+touch /unison-unicloud/share/$(date +%s).txt
 ```
 
 ```bash
