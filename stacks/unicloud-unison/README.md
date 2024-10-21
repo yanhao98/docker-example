@@ -70,3 +70,10 @@ docker run -d --name unison-unicloud-client \
   ghcr.io/yanhao98/unicloud:latest
 docker logs -f unison-unicloud-client
 ```
+
+```bash
+docker exec -it unison-unicloud-client tail -f /data/log/client.log
+docker exec -it unison-unicloud-client tail -f /data/log/supervisord.log
+docker exec -it unison-unicloud-client tail -f /data/log/unicloud-supervise-err.log
+docker exec -it unison-unicloud-client tail -f /data/log/unicloud-supervise-std.log
+```
