@@ -66,7 +66,7 @@ docker run -d --name unison-unicloud-client \
   -e SERVER_SHARE=$SERVER_SHARE \
   -e API_PROTOCOL=https \
   -e API_PORT=443 \
-  -e SYNC_INTERVAL=15 \
+  -e SYNC_INTERVAL=60 \
   --mount type=bind,source=/unison-unicloud/data,target=/data \
   -e CLIENT_DEST=/share \
   --mount type=bind,source=$SOURCE1,target="/share$SOURCE1" \
