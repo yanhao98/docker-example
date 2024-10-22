@@ -17,6 +17,7 @@ HTTP_PORT=5001
 SERVER_UI_PASSWORD=
 
 docker run -d --restart unless-stopped --name unison-unicloud-server \
+  --hostname unison-unicloud-server.oo1.dev \
   -p $SSH_PORT:22 -p $HTTP_PORT:80 \
   -e TZ=Asia/Shanghai \
   -e USER=root -e USER_UID=0 \
