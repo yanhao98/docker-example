@@ -54,7 +54,7 @@ SERVER_PORT=2222
 
 docker run -d --name unison-unicloud-client \
   -e SHARE_IGNORE="mysql.sock|.unison" \
-  -e UNISON_PARAMS="-group -owner -times" \
+  -e UNISON_PARAMS="group=true|owner=true|times=true" \
   -e TZ=Asia/Shanghai \
   -e USER=root -e USER_UID=0 \
   --restart on-failure \
