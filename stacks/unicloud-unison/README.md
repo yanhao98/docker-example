@@ -6,9 +6,9 @@
 
 ### 启动服务端
 ```bash
-mkdir -p /unison-unicloud/data /unison-unicloud/shares
-chown -R 0:0 /unison-unicloud/data
-chmod 777 /unison-unicloud/shares
+mkdir -p /unison-unicloud-server/data /unison-unicloud-server/shares
+chown -R 0:0 /unison-unicloud-server/data
+chmod 777 /unison-unicloud-server/shares
 ```
 
 ```bash
@@ -24,8 +24,8 @@ docker run -d --restart unless-stopped --name unison-unicloud-server \
   -e SERVER_UI_USERNAME=unison-unicloud-admin \
   -e SERVER_UI_PASSWORD=$SERVER_UI_PASSWORD \
   -e ROLE=SERVER \
-  --mount type=bind,source=/unison-unicloud/data,target=/data \
-  --mount type=bind,source=/unison-unicloud/shares,target=/shares \
+  --mount type=bind,source=/unison-unicloud-server/data,target=/data \
+  --mount type=bind,source=/unison-unicloud-server/shares,target=/shares \
   ghcr.io/yanhao98/unicloud:latest
 docker logs -f unison-unicloud-server
 ```
