@@ -43,8 +43,8 @@ curl https://unison-unicloud-server.oo1.dev/status -v
 ```
 
 ```bash
-mkdir -p /unison-unicloud/data
-# chown -R 1000:1000 /unison-unicloud/data
+mkdir -p /unison-unicloud-client/data
+# chown -R 1000:1000 /unison-unicloud-client/data
 ```
 
 ```bash
@@ -67,7 +67,7 @@ docker run -d --name unison-unicloud-client \
   -e API_PROTOCOL=https \
   -e API_PORT=443 \
   -e SYNC_INTERVAL=60 \
-  --mount type=bind,source=/unison-unicloud/data,target=/data \
+  --mount type=bind,source=/unison-unicloud-client/data,target=/data \
   -e CLIENT_DEST=/share \
   --mount type=bind,source=$SOURCE1,target="/share$SOURCE1" \
   ghcr.io/yanhao98/unicloud:latest
@@ -79,4 +79,8 @@ docker exec -it unison-unicloud-client tail -f /data/log/client.log
 docker exec -it unison-unicloud-client tail -f /data/log/supervisord.log
 docker exec -it unison-unicloud-client tail -f /data/log/unicloud-supervise-err.log
 docker exec -it unison-unicloud-client tail -f /data/log/unicloud-supervise-std.log
+```
+
+```bash
+docker exec -e HOME=/data -it unison-unicloud-client unison unicloud
 ```
