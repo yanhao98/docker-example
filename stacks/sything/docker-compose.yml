@@ -1,5 +1,4 @@
 ---
-version: "3"
 volumes:
   st-sync-1-cfg:
   st-sync-2-cfg:
