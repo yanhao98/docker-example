@@ -1,0 +1,49 @@
+---
+volumes:
+  st-sync-1-cfg:
+  st-sync-2-cfg:
+x-common-configuration: &common-configuration
+  image: syncthing/syncthing
+  environment:
+    - TZ=Asia/Shanghai
+    - PUID=0
+    - PGID=0
+  restart: unless-stopped
+  healthcheck:
+    test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+    # interval: 1m
+    # timeout: 10s
+    interval: 10s
+    timeout: 5s
+    retries: 3
+services:
+  syncthing-1:
+    <<: *common-configuration
+    hostname: my-syncthing-1
+    volumes:
+      - ./st-sync-1-folder:/st-folder
+      - type: volume
+        source: st-sync-1-cfg
+        target: /var/syncthing/config
+    ports:
+      - 28001:8384 # Web UI
+      # - 22000:22000/tcp # TCP file transfers
+      # - 22000:22000/udp # QUIC file transfers
+      # - 21027:21027/udp # Receive local discovery broadcasts
+    restart: unless-stopped
+  syncthing-2:
+    depends_on:
+      syncthing-1:
+        condition: service_healthy
+    <<: *common-configuration
+    hostname: my-syncthing-2
+    volumes:
+      - ./st-sync-2-folder:/st-folder
+      - type: volume
+        source: st-sync-2-cfg
+        target: /var/syncthing/config
+    ports:
+      - 28002:8384 # Web UI
+      # - 22000:22000/tcp # TCP file transfers
+      # - 22000:22000/udp # QUIC file transfers
+      # - 21027:21027/udp # Receive local discovery broadcasts
