@@ -1,7 +1,4 @@
 ---
-volumes:
-  st-sync-1-cfg:
-  st-sync-2-cfg:
 x-common-configuration: &common-configuration
   image: syncthing/syncthing
   environment:
@@ -11,8 +8,6 @@ x-common-configuration: &common-configuration
   restart: unless-stopped
   healthcheck:
     test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
-    # interval: 1m
-    # timeout: 10s
     interval: 10s
     timeout: 5s
     retries: 3
@@ -22,29 +17,16 @@ services:
     hostname: my-syncthing-1
     volumes:
       - /root/st-sync-1-folder:/st-folder
-      - type: volume
-        source: st-sync-1-cfg
-        target: /var/syncthing/config
+      - /root/st-sync-1-cfg:/var/syncthing/config
     ports:
-      - 28001:8384 # Web UI
-      # - 22000:22000/tcp # TCP file transfers
-      # - 22000:22000/udp # QUIC file transfers
-      # - 21027:21027/udp # Receive local discovery broadcasts
-    restart: unless-stopped
+      - 28001:8384
   syncthing-2:
     depends_on:
-      # syncthing-1:
-      #   condition: service_healthy #  v3 版本中已经被移除，只能通过一些额外的健康检查工具或者脚本来实现类似效果。
       - syncthing-1
     <<: *common-configuration
     hostname: my-syncthing-2
     volumes:
       - /root/st-sync-2-folder:/st-folder
-      - type: volume
-        source: st-sync-2-cfg
-        target: /var/syncthing/config
+      - /root/st-sync-2-cfg:/var/syncthing/config
     ports:
-      - 28002:8384 # Web UI
-      # - 22000:22000/tcp # TCP file transfers
-      # - 22000:22000/udp # QUIC file transfers
-      # - 21027:21027/udp # Receive local discovery broadcasts
+      - 28002:8384
