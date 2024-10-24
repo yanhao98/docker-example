@@ -1,4 +1,5 @@
 ---
+name: st
 x-common-configuration: &common-configuration
   image: syncthing/syncthing
   environment:

@@ -1,4 +1,5 @@
 ---
+name: st
 volumes:
   st-sync-1-cfg:
   st-sync-2-cfg:
