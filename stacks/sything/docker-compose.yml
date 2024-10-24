@@ -1,4 +1,5 @@
 ---
+version: "3"
 volumes:
   st-sync-1-cfg:
   st-sync-2-cfg:
@@ -33,8 +34,9 @@ services:
     restart: unless-stopped
   syncthing-2:
     depends_on:
-      syncthing-1:
-        condition: service_healthy
+      # syncthing-1:
+      #   condition: service_healthy #  v3 版本中已经被移除，只能通过一些额外的健康检查工具或者脚本来实现类似效果。
+      - syncthing-1
     <<: *common-configuration
     hostname: my-syncthing-2
     volumes:
