@@ -29,4 +29,5 @@ echo -e "\n Folder Path: $TARGET1 \n"
 docker exec -it syncthing find /host -maxdepth 3
 
 tree /root/st-folder -L 3
+find /root/st-folder -maxdepth 3
 ```
