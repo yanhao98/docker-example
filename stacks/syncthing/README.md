@@ -18,7 +18,7 @@ docker run -d --restart unless-stopped --name syncthing \
   -p 28198:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp \
   syncthing/syncthing
 
-echo -e "\n Folder Path: $TARGET1 \n"
+echo -e "\n  Folder ID: $HOSTNAME$SOURCE1  \nFolder Path: $TARGET1 \n----- \n/host/root/st-folder/$HOSTNAME(change-it)/root/_docker-stacks"
 ```
 
 - 访问`https://服务器ip:28198`
